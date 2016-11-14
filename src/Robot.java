@@ -57,7 +57,7 @@ public class Robot implements CanFoundListener, CanContactedListener, LineFoundL
 				inContact = false;
 			}
 			try{
-				Thread.sleep(550);
+				Thread.sleep(250);
 			}
 			catch(InterruptedException e)
 			{

@@ -7,11 +7,13 @@ public class GroundManager {
 	Thread irThread;
 	public GroundManager(Robot r)
 	{
+				
 		irSensor = new IRSensorModule(r);
 		irThread = new Thread(irSensor);
-		irThread.start();
-		irThread.setDaemon(true);
 		dt = new Drivetrain();
+		irThread.start();
+		irThread.setDaemon(true);		
+		
 	}
 	public void Turn()
 	{
