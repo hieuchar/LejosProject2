@@ -19,17 +19,16 @@ public class IRSensorModule implements Runnable{
 	{
 		IRSensor.setFloodlight(LightSensor.RED);	
 		IRSensor.setFloodlight(true);
-		while(true)
+		while(!Robot.getStatus())
 		{
-			if(IRSensor.getLightValue() < 38)
+			if(IRSensor.readValue() < 38)
 			{
 				//throw event linefound
 				for(LineFoundListener l : listeners)
 				{
 					l.LineFound();
 				}				
-			}
-			Thread.yield();
+			}			
 		}
 	}
 

@@ -29,12 +29,12 @@ public class Robot implements CanFoundListener, CanContactedListener, LineFoundL
 	public void Start() 
 	{
 		clock.Start();
-		gm.Turn();
 		cm.Start();
+		gm.Turn();		
 		ui.playNoise(BUZZ);
 		Wait();
 	}
-	public static void Wait()
+	public void Wait()
 	{
 		while(cansCleared < 3)
 		{
@@ -44,14 +44,6 @@ public class Robot implements CanFoundListener, CanContactedListener, LineFoundL
 		clock.Stop();
 		ui.DisplayTime(clock.GetTime());
 		Button.waitForAnyPress();
-	}
-	public static void MovingFoward()
-	{
-		ui.playNoise(BUZZ);
-	}
-	public static void MovingBackward()
-	{
-		ui.playNoise(CHIRP);
 	}
 	@Override
 	public void LineFound()
@@ -78,8 +70,8 @@ public class Robot implements CanFoundListener, CanContactedListener, LineFoundL
 			}
 			catch(InterruptedException e)
 			{
-				
 			}			
+			
 			gm.Turn();
 			ui.playNoise(BUZZ);
 		}
