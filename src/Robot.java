@@ -56,21 +56,13 @@ public class Robot implements CanFoundListener, CanContactedListener, LineFoundL
 				cansCleared++;
 				inContact = false;
 			}
-			try{
-				Thread.sleep(250);
-			}
-			catch(InterruptedException e)
-			{
-				
-			}
+			
+			Sleep(250);
+			
 			gm.Backward();
 			ui.playNoise(CHIRP);
-			try{
-				Thread.sleep(1500);
-			}
-			catch(InterruptedException e)
-			{
-			}			
+			
+			Sleep(1500);
 			
 			gm.Turn();
 			ui.playNoise(BUZZ);
@@ -88,25 +80,24 @@ public class Robot implements CanFoundListener, CanContactedListener, LineFoundL
 		gm.Forward();
 		ui.playNoise(BUZZ);
 	}
-	public static void Evacuate()
+	public void Evacuate()
 	{
-		done = true;
 		gm.Forward();
 		ui.playNoise(BUZZ);
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Sleep(3000);
+    done = true;
 		ui.DisplayTime(clock.GetTime());
 		gm.Stop();
 		Button.waitForAnyPress();
 		System.exit(0);
 	}
-	public static boolean getStatus()
+	public boolean getStatus()
 	{
 		return done;
 	}
-
+	public void Sleep(int milliseconds)
+	{
+	  try { Thread.sleep(milliseconds); }
+    catch(InterruptedException e) { }
+	}
 }
