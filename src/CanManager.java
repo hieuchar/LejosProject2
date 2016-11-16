@@ -10,7 +10,8 @@ public class CanManager {
 	{
 		touchSensors = new TouchSensorModule();
 		touchSensors.addListener(r);
-		rangeFinder = new RangeFinderModule(r);
+		rangeFinder = new RangeFinderModule();
+		rangeFinder.AddListener(r);
 	}
 	public void Start()
 	{

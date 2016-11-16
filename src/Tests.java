@@ -11,9 +11,15 @@ public class Tests {
 		assertFalse(irMod.foundLine(40));
 		assertTrue(irMod.foundLine(-12));
 		assertFalse(irMod.foundLine(675157645));
-		TouchSensorModule tsm = new TouchSensorModule();
-		
-		
+	}
+	@Test
+	public void testRangeFinder()
+	{
+		RangeFinderModule rfMod = new RangeFinderModule();
+		assertTrue(rfMod.FoundCan(35));
+		assertFalse(rfMod.FoundCan(41));
+		assertTrue(rfMod.FoundCan(-12));
+		assertFalse(rfMod.FoundCan(675157645));
 	}
 
 }
