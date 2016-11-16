@@ -9,10 +9,10 @@ import lejos.nxt.SensorPort;
 public class IRSensorModule implements Runnable{
 	private LightSensor IRSensor;
 	private List<LineFoundListener> listeners = new ArrayList<LineFoundListener>();
-	public IRSensorModule(Robot r)
+	public IRSensorModule()
 	{
 		IRSensor = new LightSensor(SensorPort.S4);
-		listeners.add(r);
+		
 	}
 	@Override
 	public void run()
@@ -21,15 +21,23 @@ public class IRSensorModule implements Runnable{
 		IRSensor.setFloodlight(true);
 		while(!Robot.getStatus())
 		{
-			if(IRSensor.readValue() < 38)
-			{
-				//throw event linefound
-				for(LineFoundListener l : listeners)
-				{
-					l.LineFound();
-				}				
-			}			
+			foundLine(IRSensor.readValue());			
 		}
+	}
+	public boolean foundLine(int value)
+	{
+		if(value < 38){
+			for(LineFoundListener l : listeners)
+			{
+				l.LineFound();
+			}	
+			return true;
+		}
+		else return false;
+	}
+	public void addListener(Robot r)
+	{
+		listeners.add(r);
 	}
 
 }

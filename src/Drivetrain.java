@@ -8,8 +8,11 @@ public class Drivetrain {
 	public static NXTRegulatedMotor motorTwo;
 	public Drivetrain()
 	{
+	
 		motorOne = Motor.A;
 		motorTwo = Motor.B;
+		motorOne.setSpeed(motorOne.getMaxSpeed());
+		motorTwo.setSpeed(motorTwo.getMaxSpeed());
 	}
 	public void Forward()
 	{

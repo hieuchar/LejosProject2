@@ -8,9 +8,10 @@ public class GroundManager {
 	public GroundManager(Robot r)
 	{
 				
-		irSensor = new IRSensorModule(r);
-		irThread = new Thread(irSensor);
+		irSensor = new IRSensorModule();
+		irSensor.addListener(r);
 		dt = new Drivetrain();
+		irThread = new Thread(irSensor);
 		irThread.start();
 		irThread.setDaemon(true);		
 		
@@ -30,9 +31,5 @@ public class GroundManager {
 	public void Stop()
 	{
 		dt.Stop();
-	}
-	public void RebootIR()
-	{
-		irThread.start();
 	}
 }

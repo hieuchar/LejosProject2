@@ -17,16 +17,18 @@ public class RangeFinderModule implements Runnable{
 	@Override
 	public void run()
 	{
-		while(!Robot.getStatus())
+		boolean canFound = false;
+		while(!canFound)
 		{
-			if(ultrasonicSensor.getDistance() < 20)
+			if(ultrasonicSensor.getDistance() < 40)
 			{
 				for(CanFoundListener c : listeners)
 				{
 					c.Found();
 				}				
+				canFound = true;
 			}
-			Thread.yield();
+			
 		}
 	}
 

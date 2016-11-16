@@ -10,21 +10,26 @@ public class Robot implements CanFoundListener, CanContactedListener, LineFoundL
 	private static int BEEP = 45;
 	private static int BUZZ = 850;
 	private static int CHIRP = 1300;	
-	private static int cansCleared;	
 	private boolean inContact = false;
-	public static void main(String[]args)
+	public static void main(String[]args) throws InterruptedException
 	{		
+		
 		Button.waitForAnyPress();
-		Robot r = new Robot();
+//		clock = new Clock();
+//		ui = new UI();
+//		clock.Start();
+//		Thread.sleep(2000);
+//		clock.Stop();
+//		ui.DisplayTime(clock.GetTime());
+		Robot r = new Robot();		
 		r.Start();
 	}
 	public Robot() 
 	{
-		gm = new GroundManager(this);
 		cm = new CanManager(this);
+		gm = new GroundManager(this);
 		ui = new UI();
 		clock = new Clock();
-		cansCleared = 0;
 	}
 	public void Start() 
 	{
@@ -36,9 +41,16 @@ public class Robot implements CanFoundListener, CanContactedListener, LineFoundL
 	}
 	public void Wait()
 	{
-		while(cansCleared < 3)
+		int timer = 0;
+		while(timer < 29)
 		{
-			Thread.yield();
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			timer++;
 		}
 		Evacuate();
 		clock.Stop();
@@ -47,44 +59,50 @@ public class Robot implements CanFoundListener, CanContactedListener, LineFoundL
 	}
 	@Override
 	public void LineFound()
-	{
-		if(cansCleared < 3)
-		{
+	{	
 			gm.Stop();
-			if(inContact)
-			{
-				cansCleared++;
-				inContact = false;
-			}
 			try{
-				Thread.sleep(250);
+				Thread.sleep(200);
 			}
 			catch(InterruptedException e)
 			{
 				
 			}
-			gm.Backward();
 			ui.playNoise(CHIRP);
+			gm.Backward();			
 			try{
-				Thread.sleep(1500);
+				Thread.sleep(1000);
 			}
 			catch(InterruptedException e)
 			{
-			}			
-			
-			gm.Turn();
+			}
 			ui.playNoise(BUZZ);
-		}
+			gm.Turn();			
+			try{
+				Thread.sleep(1200);
+				cm.ReBoot();
+			}
+			catch(InterruptedException e)
+			{
+				
+			}						
+			inContact = false;			
 	}
 	@Override
 	public void CanContacted()
 	{
-		inContact = true;
+		inContact = true;		
 		ui.playNoise(BEEP);
 	}
 	@Override
 	public void Found()
 	{
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		gm.Forward();
 		ui.playNoise(BUZZ);
 	}
@@ -94,12 +112,10 @@ public class Robot implements CanFoundListener, CanContactedListener, LineFoundL
 		gm.Forward();
 		ui.playNoise(BUZZ);
 		try {
-			Thread.sleep(3000);
+			Thread.sleep(6000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		ui.DisplayTime(clock.GetTime());
+	
+		}		
 		gm.Stop();
 		Button.waitForAnyPress();
 		System.exit(0);

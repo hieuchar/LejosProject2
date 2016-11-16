@@ -10,26 +10,30 @@ public class TouchSensorModule implements Runnable {
 	private TouchSensor touchSensorTwo;
 	private List<CanContactedListener> listeners = new ArrayList<CanContactedListener>();
 
-	public TouchSensorModule(Robot r)
+	public TouchSensorModule()
 	{
 		touchSensorOne = new TouchSensor(SensorPort.S2);
 		touchSensorTwo = new TouchSensor(SensorPort.S3);
+	}
+	public void addListener(Robot r)
+	{
 		listeners.add(r);
-	
 	}
 	@Override
 	public void run()
 	{
-		while(!Robot.getStatus())
+		boolean foundCan = false;
+		while(!foundCan)
 		{
 			if(touchSensorOne.isPressed() || touchSensorTwo.isPressed())
 			{
 				for(CanContactedListener c : listeners)
 				{
 					c.CanContacted();
-				}				
-			}
-			Thread.yield();
+				}					
+				foundCan = true;
+			}					
 		}
 	}
+	
 }

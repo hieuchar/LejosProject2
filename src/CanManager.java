@@ -8,7 +8,8 @@ public class CanManager {
 	public int distance = 255;
 	public CanManager(Robot r) 
 	{
-		touchSensors = new TouchSensorModule(r);
+		touchSensors = new TouchSensorModule();
+		touchSensors.addListener(r);
 		rangeFinder = new RangeFinderModule(r);
 	}
 	public void Start()
@@ -16,13 +17,13 @@ public class CanManager {
 		rfThread = new Thread(rangeFinder);
 		tThread = new Thread(touchSensors);		
 		rfThread.start();
-		tThread.start();
-		rfThread.setDaemon(true);
-		tThread.setDaemon(true);
+		tThread.start();		
 	}
 	public void ReBoot()
 	{
-		rfThread.start();
+		rfThread = new Thread(rangeFinder);
+		tThread = new Thread(touchSensors);	
 		tThread.start();
+		rfThread.start();
 	}
 }
