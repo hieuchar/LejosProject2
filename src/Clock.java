@@ -21,7 +21,6 @@ public class Clock {
 	}
 	public double GetTime()
 	{
-		return (end / 1000) - (start / 1000); 
+		return (double)((end - start) / 1000); 
 	}
-
 }

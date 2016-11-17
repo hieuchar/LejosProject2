@@ -1,11 +1,9 @@
 import static org.junit.Assert.*;
-
 import org.junit.Test;
 
 public class Tests {
-
 	@Test
-	public void test() {
+	public static void testIRSensor() {
 		IRSensorModule irMod = new IRSensorModule();
 		assertTrue(irMod.foundLine(35));
 		assertFalse(irMod.foundLine(40));
@@ -13,7 +11,7 @@ public class Tests {
 		assertFalse(irMod.foundLine(675157645));
 	}
 	@Test
-	public void testRangeFinder()
+	public static void testRangeFinder()
 	{
 		RangeFinderModule rfMod = new RangeFinderModule();
 		assertTrue(rfMod.FoundCan(35));
@@ -21,5 +19,21 @@ public class Tests {
 		assertTrue(rfMod.FoundCan(-12));
 		assertFalse(rfMod.FoundCan(675157645));
 	}
-
+	@Test
+	public static void testClock()
+	{
+	  Clock clock = new Clock();
+	  
+	  clock.Start();
+	  try { Thread.sleep(2500); }
+    catch (InterruptedException e) { }
+	  clock.Stop();
+	  assertTrue(clock.GetTime() < 30);
+	  
+	  clock.Start();
+    try { Thread.sleep(3100); }
+    catch (InterruptedException e) { }
+    clock.Stop();
+    assertTrue(clock.GetTime() > 30);
+	}
 }
