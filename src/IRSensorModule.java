@@ -3,21 +3,18 @@
 import java.util.ArrayList;
 import java.util.List;
 
-import lejos.nxt.LightSensor;
-import lejos.nxt.SensorPort;
 
 public class IRSensorModule implements Runnable{
-	private LightSensor IRSensor;
+	private HardWareIRSensor IRSensor;
 	private List<LineFoundListener> listeners = new ArrayList<LineFoundListener>();
-	public IRSensorModule()
+	public IRSensorModule(HardWareIRSensor iRSensor)
 	{
-		IRSensor = new LightSensor(SensorPort.S4);
-		
+			this.IRSensor = iRSensor;
 	}
 	@Override
 	public void run()
 	{
-		IRSensor.setFloodlight(LightSensor.RED);	
+		IRSensor.setFloodlight(5);	
 		IRSensor.setFloodlight(true);
 		while(!Robot.getStatus())
 		{

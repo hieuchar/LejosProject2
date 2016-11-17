@@ -3,37 +3,49 @@ import org.junit.Test;
 
 public class Tests {
 	@Test
-	public static void testIRSensor() {
-		IRSensorModule irMod = new IRSensorModule();
-		assertTrue(irMod.foundLine(35));
-		assertFalse(irMod.foundLine(40));
-		assertTrue(irMod.foundLine(-12));
-		assertFalse(irMod.foundLine(675157645));
+	public  void testIRSensor() {
+		HardWareIRSensor tester = new VirtualIRSensor();
+		tester.setValue(35);
+		IRSensorModule irMod = new IRSensorModule(tester);
+		assertTrue(irMod.foundLine(tester.readValue()));
+		tester.setValue(40);
+		assertFalse(irMod.foundLine(tester.readValue()));
+		tester.setValue(-12);
+		assertTrue(irMod.foundLine(tester.readValue()));
+		tester.setValue(675157645);
+		assertFalse(irMod.foundLine(tester.readValue()));
 	}
 	@Test
-	public static void testRangeFinder()
+	public  void testRangeFinder()
 	{
-		RangeFinderModule rfMod = new RangeFinderModule();
-		assertTrue(rfMod.FoundCan(35));
-		assertFalse(rfMod.FoundCan(41));
-		assertTrue(rfMod.FoundCan(-12));
-		assertFalse(rfMod.FoundCan(675157645));
+		HardWareRangeFinder tester = new VirtualRangeFinder();
+		RangeFinderModule rfMod = new RangeFinderModule(tester);
+		tester.setDistance(35);
+		assertTrue(rfMod.FoundCan(tester.getDistance()));
+		tester.setDistance(41);
+		assertFalse(rfMod.FoundCan(tester.getDistance()));
+		tester.setDistance(-12);
+		assertTrue(rfMod.FoundCan(tester.getDistance()));
+		tester.setDistance(675157645);
+		assertFalse(rfMod.FoundCan(tester.getDistance()));
 	}
 	@Test
-	public static void testClock()
+	public  void testClock()
 	{
-	  Clock clock = new Clock();
-	  
-	  clock.Start();
-	  try { Thread.sleep(2500); }
-    catch (InterruptedException e) { }
-	  clock.Stop();
-	  assertTrue(clock.GetTime() < 30);
-	  
-	  clock.Start();
-    try { Thread.sleep(3100); }
-    catch (InterruptedException e) { }
-    clock.Stop();
-    assertTrue(clock.GetTime() > 30);
+		Clock clock = new Clock();
+
+		clock.Start();
+		try { Thread.sleep(25000); }
+		catch (InterruptedException e) { }
+		clock.Stop();
+		System.out.println(clock.GetTime());
+		assertTrue(clock.GetTime() < 30);
+		Clock clock2 = new Clock();
+		clock2.Start();
+		try { Thread.sleep(31000); }
+		catch (InterruptedException e) { }
+		clock2.Stop();
+		System.out.println(clock2.GetTime());
+		assertTrue(clock2.GetTime() > 30);
 	}
 }

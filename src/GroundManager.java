@@ -7,8 +7,8 @@ public class GroundManager {
 	Thread irThread;
 	public GroundManager(Robot r)
 	{
-				
-		irSensor = new IRSensorModule();
+		HardWareIRSensor hardware= 	new IRSensor();	
+		irSensor = new IRSensorModule(hardware);
 		irSensor.addListener(r);
 		dt = new Drivetrain();
 		irThread = new Thread(irSensor);

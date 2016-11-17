@@ -3,16 +3,13 @@
 import java.util.ArrayList;
 import java.util.List;
 
-import lejos.nxt.SensorPort;
-import lejos.nxt.UltrasonicSensor;
 
 public class RangeFinderModule implements Runnable{
 	private List<CanFoundListener> listeners = new ArrayList<CanFoundListener>();
-	private UltrasonicSensor ultrasonicSensor;
-	public RangeFinderModule()
+	private HardWareRangeFinder ultrasonicSensor;
+	public RangeFinderModule(HardWareRangeFinder hardware)
 	{
-		ultrasonicSensor = new UltrasonicSensor(SensorPort.S1);
-
+			ultrasonicSensor = hardware;
 	}
 	public void AddListener(Robot r)
 	{
